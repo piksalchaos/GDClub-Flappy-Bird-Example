@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://ur4lile5kefd"]
+
+[ext_resource type="Script" path="res://scenes/bird.gd" id="1_cu713"]
+[ext_resource type="Texture2D" uid="uid://b2sscuaj5sa7r" path="res://assets/sprites/bird.png" id="3_8tnxn"]
+[ext_resource type="AudioStream" uid="uid://bpusvlu28xxj4" path="res://assets/sounds/flap.wav" id="3_uqkx5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jvcu"]
+atlas = ExtResource("3_8tnxn")
+region = Rect2(0, 0, 13, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e82uh"]
+atlas = ExtResource("3_8tnxn")
+region = Rect2(13, 0, 13, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n1icw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jvcu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e82uh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4xc86"]
+radius = 25.0
+height = 65.0
+
+[node name="Bird" type="CharacterBody2D"]
+script = ExtResource("1_cu713")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_n1icw")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4xc86")
+
+[node name="FlapAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_uqkx5")

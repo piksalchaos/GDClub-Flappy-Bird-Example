@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://efsrpdo1bf2f"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_2ll1u"]
+[ext_resource type="PackedScene" uid="uid://ur4lile5kefd" path="res://scenes/bird.tscn" id="2_k65lj"]
+[ext_resource type="Texture2D" uid="uid://c1wcd0qgsjpl3" path="res://assets/sprites/background.png" id="2_o2kw5"]
+[ext_resource type="AudioStream" uid="uid://cjqsg3rbew2ro" path="res://assets/sounds/score.wav" id="4_bh5ii"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_2ll1u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(360, 360)
+scale = Vector2(5, 5)
+texture = ExtResource("2_o2kw5")
+
+[node name="Bird" parent="." instance=ExtResource("2_k65lj")]
+z_index = 1
+position = Vector2(240, 360)
+
+[node name="PipeTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ScoreAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bh5ii")
+
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]

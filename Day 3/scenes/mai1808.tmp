@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://efsrpdo1bf2f"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_2ll1u"]
+[ext_resource type="PackedScene" uid="uid://ur4lile5kefd" path="res://scenes/bird.tscn" id="2_k65lj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kjfi"]
+size = Vector2(720, 20)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_2ll1u")
+
+[node name="Bird" parent="." instance=ExtResource("2_k65lj")]
+z_index = 1
+position = Vector2(240, 360)
+
+[node name="Ground" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(360, 780)
+shape = SubResource("RectangleShape2D_1kjfi")
+
+[node name="PipeTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="ScoreLabel" type="Label" parent="."]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -330.0
+offset_right = -290.0
+offset_bottom = -307.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+
+[node name="StartButton" type="Button" parent="."]
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -15.0
+offset_right = 28.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+
+[connection signal="body_entered" from="Ground" to="." method="_on_ground_body_entered"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="button_down" from="StartButton" to="." method="_on_start_button_button_down"]

@@ -1,14 +1,14 @@
 extends Node
-#remember, the scorelabel and bird z index is higher than everything else
+
 const PIPE_SCENE: PackedScene = preload("res://scenes/pipe.tscn")
 const PIPE_Y_RANGE: int = 400
 const PIPE_X_OFFSET: int = 50
 const SCROLL_SPEED: float = 200
 
+var game_began: bool = false
+var game_ended: bool = false
 var pipes: Array
 var score: int = 0
-var game_began: bool = false
-var is_game_running: bool = false
 @onready var screen_size: Vector2i = get_window().size
 
 @onready var bird: CharacterBody2D = $Bird
@@ -19,7 +19,7 @@ var is_game_running: bool = false
 @onready var hit_audio: AudioStreamPlayer = $HitAudio
 
 func _process(delta: float) -> void:
-	if not is_game_running:
+	if game_ended:
 		return
 	for i in range(pipes.size()):
 		pipes[i].position.x -= SCROLL_SPEED * delta
@@ -33,7 +33,6 @@ func _input(event: InputEvent) -> void:
 
 func begin_game():
 	game_began = true
-	is_game_running = true
 	bird.activate()
 	pipe_timer.start()
 
@@ -52,10 +51,10 @@ func score_point():
 	score_label.text = str(score)
 
 func end_game():
-	if not is_game_running:
+	if game_ended:
 		return
 	hit_audio.play()
-	is_game_running = false
+	game_ended = true
 	bird.hit()
 	restart_button.show()
 	pipe_timer.stop()

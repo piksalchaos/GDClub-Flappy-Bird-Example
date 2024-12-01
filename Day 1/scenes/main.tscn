@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://efsrpdo1bf2f"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_2ll1u"]
+[ext_resource type="PackedScene" uid="uid://ur4lile5kefd" path="res://scenes/bird.tscn" id="2_k65lj"]
+[ext_resource type="Texture2D" uid="uid://c1wcd0qgsjpl3" path="res://assets/sprites/background.png" id="2_o2kw5"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_2ll1u")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(360, 360)
+scale = Vector2(5, 5)
+texture = ExtResource("2_o2kw5")
+
+[node name="Bird" parent="." instance=ExtResource("2_k65lj")]
+z_index = 1
+position = Vector2(240, 360)

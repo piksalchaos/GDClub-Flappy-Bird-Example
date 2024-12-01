@@ -1,0 +1,64 @@
+These are my personal notes for designing the workshop!
+
+day 1:
+creating the bird
+	bird starts paused
+	once you click, the main scene will activate the bird
+	when the bird is activated:
+		it can flap
+		whenever it flaps, it emits the flap audio
+		it falls by gravity
+		it's rotation responds to its y velocity
+
+variables
+constants
+data types and typed variables
+	float
+	bool
+	vector2
+	node types (audiostreamplayer and inputevent, which doesn't rly matter)
+properties (position)
+virtual functions (_ready, _physics_process, and _input)
+custom functions (activate() in the player scene and begin_game() in the main scene)
+calling functions
+accessing properties and methods using '.' operator
+accessing child nodes using '$'
+'@onready' annotation
+how to use delta_time
+conditional statements
+conditional operators (not, <)
+the weird fact that the y axis is inverted in godot
+doing math in code (+= sign, '*' for multiplication)
+using "return" to end a function
+
+day 2:
+creating the pipe scene
+instantiating pipes in the main scene when the game begins
+	pipes spawn in by a timer
+	each pipe has a random y position
+using a for loop to move the pipes left and removing them when they move out of the screen
+whenever the player goes in between the pipes, they will score a point by signal in pipe scene
+	this will also trigger the score audio
+
+arrays
+for loops
+for loops with range()
+godot timers
+godot scene instancing
+signals (_on_pipe_timer_timeout)
+custom signals ('scored' in pipe scene) and connecting them in code
+using "print" to debug
+
+day 3:
+killing the player whenever it hits the pipe
+	pipe will emit a hit signal whenever a body enters it
+killing the player whenever it touches the ground
+	its an area2d on the floor that triggers the hit function whenever a body enters it
+when the player dies, it's is_flying property becomes false, and game ends
+	it just falls to the floor rotated 90 degrees
+	hit audio will play when game ends
+new variable game_ended in main_scene that becomes true when player dies. when its true:
+	the pipes will stop spawning and moving
+	the restart button will show itself
+when you press the restart button, the current scene will reload itself
+changing the z index of the player and gui so it shows up in front of the pipes
