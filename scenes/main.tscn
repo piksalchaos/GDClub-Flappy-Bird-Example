@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://efsrpdo1bf2f"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_2ll1u"]
+[ext_resource type="PackedScene" uid="uid://ur4lile5kefd" path="res://scenes/bird.tscn" id="2_k65lj"]
+[ext_resource type="Texture2D" uid="uid://c1wcd0qgsjpl3" path="res://assets/sprites/background.png" id="2_o2kw5"]
+[ext_resource type="AudioStream" uid="uid://cjqsg3rbew2ro" path="res://assets/sounds/score.wav" id="4_bh5ii"]
+[ext_resource type="AudioStream" uid="uid://y3yhobslkhrk" path="res://assets/sounds/hit.wav" id="5_mrgi6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kjfi"]
+size = Vector2(720, 20)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_2ll1u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(360, 360)
+scale = Vector2(5, 5)
+texture = ExtResource("2_o2kw5")
+
+[node name="Bird" parent="." instance=ExtResource("2_k65lj")]
+z_index = 1
+position = Vector2(240, 360)
+
+[node name="Ground" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(360, 780)
+shape = SubResource("RectangleShape2D_1kjfi")
+
+[node name="PipeTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ScoreLabel" type="Label" parent="."]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -321.0
+offset_right = 8.0
+offset_bottom = -305.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="."]
+visible = false
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -15.0
+offset_right = 28.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "RESTART GAME"
+
+[node name="ScoreAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bh5ii")
+
+[node name="HitAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_mrgi6")
+
+[connection signal="body_entered" from="Ground" to="." method="_on_ground_body_entered"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="button_down" from="RestartButton" to="." method="_on_restart_button_button_down"]
