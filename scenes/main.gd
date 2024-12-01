@@ -1,5 +1,5 @@
 extends Node
-#remember, the scorelabel and bird z index is higher
+#remember, the scorelabel and bird z index is higher than everything else
 const PIPE_SCENE: PackedScene = preload("res://scenes/pipe.tscn")
 const PIPE_Y_RANGE: int = 400
 const PIPE_X_OFFSET: int = 50
@@ -9,7 +9,6 @@ var pipes: Array
 var score: int = 0
 var game_began: bool = false
 var is_game_running: bool = false
-
 @onready var screen_size: Vector2i = get_window().size
 
 @onready var bird: CharacterBody2D = $Bird
